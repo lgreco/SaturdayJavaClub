@@ -1,4 +1,4 @@
-package _05SEP2020;
+package _2020SEP05;
 
 public class CharPrintout {
     public static void main(String[] args) {

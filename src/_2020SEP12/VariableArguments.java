@@ -1,4 +1,4 @@
-package _12SEP2020;
+package _2020SEP12;
 
 public class VariableArguments {
     static void foo (String... args) {
