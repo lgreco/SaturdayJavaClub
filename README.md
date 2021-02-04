@@ -24,7 +24,7 @@ a fresh cup of coffee or your favorite beverage,
 and join fellow students and members of the department's
 programming instructional team to learn from each other.
 
-[Calendar file for Google Calendar, Outlook, etc.]()
+[Calendar file for Google Calendar, Outlook, etc.](https://raw.githubusercontent.com/lgreco/SaturdayJavaClub/master/MS%20Office%20Files/SJC_SP21.ics)
 
 
 
