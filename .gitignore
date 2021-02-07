@@ -1,5 +1,5 @@
 .idea/
 out/
+LocalOnly/
 *.iml
 .gitignore
-LocalOnly/
