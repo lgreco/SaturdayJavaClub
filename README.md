@@ -2,6 +2,9 @@
 
 ## Information for Spring 2021
 
+No club meeting 2/13 (Spring Break 1).
+Next meeting: Saturday 2/20, 9 a.m.
+
 We meet every **Saturday, at 9 a.m.,** beginning February 6.
 Everyone is welcome to the Club meetings.
 The setting is casual and informal.
