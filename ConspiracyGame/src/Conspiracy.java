@@ -35,12 +35,12 @@ public class Conspiracy {
                 "   The Saturday Java Club becomes aware of the Circle's malevolent\n" +
                 "plans. In response, the Club posts a guard outside the place it meets.\n" +
                 "The guard's job is to tell if somone arriving to the meeting is a Circle\n" +
-                "inflitrator or a pure-at-heart, loyal member of the Club.\n\n" +
+                "infiltrators or a pure-at-heart, loyal member of the Club.\n\n" +
                 "You. Are. The. Guard.\n");
 
         // Loop to start the game
         boolean appropriateResponse = false;
-        while ( !appropriateResponse) {
+        while ( !appropriateResponse ) {
             System.out.println("Are you ready to defend your Club?");
             System.out.println("[ Enter Y for yes, N for No (to end game) ]");
             String response = keyboard.next();
@@ -71,13 +71,16 @@ public class Conspiracy {
         while ( keepAskingQuestions ) {
             // Pull a question from the questions pool
             // Pull an answer from the answers pool that somehow fits the question
-            // Analyze the answer (look for _ and lots of spaces)
+            // Analyze the answer (look for _ and lots of spaces or extraneous ":" )
             // Update the confidence profile of the guest
             // If confidence falls below threshold, identify as FOE
             //   otherwise ask another question if possible
             // If all allowed questions are asked, and confidence profile ok, admit.
             questionsAsked++; // increment the questions counter
-            keepAskingQuestions = questionsAsked < numberOfQuestionsToAsk; // Can we ask one more question?
+            // keepAskingQuestions = questionsAsked < numberOfQuestionsToAsk; // Can we ask one more question?
+            if ( questionsAsked >= numberOfQuestionsToAsk ) {
+                keepAskingQuestions = false;
+            }
         }
     } // method playGame
 }
