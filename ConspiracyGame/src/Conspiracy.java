@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -8,12 +9,20 @@ public class Conspiracy {
     // Some constants
     private static final String YES = "Y"; // for use with equals()
     private static final String NO = "N"; // for use with equals()
-    private static final double INITIAL_FRIEND = 0.25 // assume an arriving guest is 25% a legit club member
+    private static final double INITIAL_FRIEND = 0.25; // the prob that an arriving guest is legit, is 25%
+    public static final double FOE_THRESHOLD = 0.66; // when we can be certain that arriving guest is foe
+    public static final int MIN_CHALLENGE_QUESTIONS = 4; // Min and max number of challenge questions ...
+    public static final int MAX_CHALLENGE_QUESTIONS = 6; // ... the guard can ask an arriving guest.
 
     // Scanner object for the entire class
     private static Scanner keyboard = new Scanner(System.in);
 
-    /** Driver method */
+    /**
+     *
+     * Driver method. As the code evolves, the plan is to take all textual content
+     * and "encode" it in a file, where it can be read from.
+     *
+     */
     public static void main(String[] args) {
         System.out.println("\n\n" +
                 "The sinister overlords of the Friday Python Circle are\n" +
@@ -44,6 +53,7 @@ public class Conspiracy {
         } // end while
     } // method main
 
+
     /**
      * The engine of the game.
      *
@@ -53,7 +63,21 @@ public class Conspiracy {
      * of questions before making a decision.
      */
     public static void playGame() {
-
-
+        Random r = new Random(); // local rng
+        boolean keepAskingQuestions = true; // condition for interrogation loop
+        int questionsAsked = 0; // counter fo questions asked
+        // Determine how many questions to ask this guest.
+        int numberOfQuestionsToAsk = MIN_CHALLENGE_QUESTIONS + r.nextInt(MAX_CHALLENGE_QUESTIONS-MIN_CHALLENGE_QUESTIONS);
+        while ( keepAskingQuestions ) {
+            // Pull a question from the questions pool
+            // Pull an answer from the answers pool that somehow fits the question
+            // Analyze the answer (look for _ and lots of spaces)
+            // Update the confidence profile of the guest
+            // If confidence falls below threshold, identify as FOE
+            //   otherwise ask another question if possible
+            // If all allowed questions are asked, and confidence profile ok, admit.
+            questionsAsked++; // increment the questions counter
+            keepAskingQuestions = questionsAsked < numberOfQuestionsToAsk; // Can we ask one more question?
+        }
     } // method playGame
 }
