@@ -1,0 +1,30 @@
+Other questions for java and python club:
+
+Guard asks:
+1. How do you say all the numbers from 1 to 10?
+RANGE(1:10) -> Python
+I don't know -> either
+Use a for loop -> Java
+
+2.  What is 3/2?
+1 -> Java
+I don't know -> either
+1.5 -> Python
+
+3. What type is 3.14159?
+I don't know -> Python
+double -> Java
+float -> Java
+
+4. Is 4000444000 a legal number?
+Yes -> Python
+No -> Java
+You need to add commas -> either (or neither)
+
+5. What goes at the end of a statement?
+semicolon ;  -> Java
+nothing enter return -> Python
+colon : -> Python
+
+
+
