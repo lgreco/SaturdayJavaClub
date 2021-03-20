@@ -2,8 +2,12 @@
 
 ## Information for Spring 2021
 
-No club meeting 2/13 (Spring Break 1).
-Next meeting: Saturday 2/20, 9 a.m.
+Next meeting: Saturday 3/27/21, 9 a.m.
+
+**Current project:** building a text-based adventure game to defend
+the club from inflitration by the sinister overlords of the Friday
+Python Circle. We use Twine for story boarding, OneNote for ideation,
+and of course IntelliJ for coding.
 
 We meet every **Saturday, at 9 a.m.,** beginning February 6.
 Everyone is welcome to the Club meetings.

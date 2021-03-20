@@ -83,4 +83,19 @@ public class Conspiracy {
             }
         }
     } // method playGame
+
+
+    /**
+     * Method to analyze a string and return a measure of its "Pythoness",
+     * ie, how likely is it to have been written by a Python infiltrator.
+     * @param s String to analyze
+     * @return a value between 0 and 1., measuring the Pythoness of s
+     */
+    public static double measurePython(String s) {
+        double pythoness = 0.0; //
+        // check for extraneous spaces
+        // check for underscores
+        // check for :
+        return pythoness;
+    } // method measurePython
 }
