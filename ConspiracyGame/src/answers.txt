@@ -7,3 +7,5 @@ SWAL # 0.5 # I don't know
 SWAL # 0.0 # double velocity = 4.5 // fps
 FOUR # 0.0 # this!
 FOUR # 1.0 # self
+SWAL # 0.6 # DOUBLE VEL = 10 ** M/S
+FOUR # 0.5 # Work

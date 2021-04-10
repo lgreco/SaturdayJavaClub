@@ -2,7 +2,7 @@
 
 ## Information for Spring 2021
 
-Next meeting: Saturday 3/27/21, 9 a.m.
+Next meeting: Saturday 4/17/21, 9 a.m.
 
 **Current project:** building a text-based adventure game to defend
 the club from inflitration by the sinister overlords of the Friday

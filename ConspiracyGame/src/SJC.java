@@ -54,7 +54,13 @@ public class SJC {
   } // method getLine
 
   public static void displayQA(File questions, File answers) throws FileNotFoundException {
-
+    // For every question in the questions file:
+    //   if the question is open ended:
+    //     print the question, followed by the message "open ended"
+    //   else:
+    //     print the question, followed by all each answers, and each
+    //       each answer is numbered 1,2,3,..., in sep lines
+    //   fi
   } // method displayQA
 
 }
