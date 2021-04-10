@@ -3,3 +3,5 @@ out/
 LocalOnly/
 *.iml
 .gitignore
+.DS_Store/
+~$*
