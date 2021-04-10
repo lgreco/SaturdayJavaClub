@@ -1,8 +1,9 @@
-*,What is your name?
-*,What is your quest?
-*,What is your favourite colour?
-ASSY, What is the capital of Assyria?
-SWAL, What is the air-speed velocity of an unladen swallow?
+* # What is your name?
+* # What is your quest?
+* # What is your favourite colour?
+ASSY # What is the capital of Assyria?
+SWAL # What is the air-speed velocity of an unladen swallow?
+FOUR # What is your favorite four-letter word?
 
 
 

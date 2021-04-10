@@ -1,7 +1,9 @@
-ASSY, Ashur!
-ASSY, Damascus
-ASSY, I don't know
-ASSY, Kent
-SWAL, What do you mean, an African or European Swallow?!
-SWAL, I don't know
-SWAL, double velocity = 4.5 // fps
+ASSY # 0.0 # Ashur!
+ASSY # 0.2 # Damascus
+ASSY # 0.5 # I don't know
+ASSY # 0.8 # Kent
+SWAL # 0.0 # What do you mean, an African or European Swallow?!
+SWAL # 0.5 # I don't know
+SWAL # 0.0 # double velocity = 4.5 // fps
+FOUR # 0.0 # this!
+FOUR # 1.0 # self

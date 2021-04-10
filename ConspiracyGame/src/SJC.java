@@ -24,6 +24,7 @@ public class SJC {
       fInput.nextLine(); // not interested in "saving" the contents we read
       lineCounter++;
     }
+    fInput.close(); // It costs nothing to be nice to the system!
     return lineCounter;
   } // method countLines
 
@@ -36,9 +37,10 @@ public class SJC {
    * @return The line at the requested position
    * @throws FileNotFoundException
    */
-  public static String getLine(File f, int lineIndex) throws FileNotFoundException {
+  public static String getLine(File f, int lineIndex) throws FileNotFoundException
+  {
     Scanner fInput = new Scanner(f); // new scanner object places read pointer at top of file
-    int lineCounter = 0;
+    int lineCounter = 0; // WE ARE OFF BY ONE ... THE ETERNAL 0- VS 1-BASED COUNTING
     String requestedLine = "DATA NOT FOUND"; // default answer if something goes wrong
     if (lineIndex <= countLines(f)) { // make sure that we are not exceeding file length (in lines)
       while (fInput.hasNext() && lineCounter != lineIndex) { // keep reading until line found
@@ -47,7 +49,12 @@ public class SJC {
         lineCounter++;
       }
     }
+    fInput.close();
     return requestedLine;
   } // method getLine
+
+  public static void displayQA(File questions, File answers) throws FileNotFoundException {
+
+  } // method displayQA
 
 }
