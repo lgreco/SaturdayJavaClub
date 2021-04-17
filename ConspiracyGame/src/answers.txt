@@ -20,3 +20,8 @@ DIFF # 0.0 # 'A' is a char primitive, "A" is a String.
 COUN # 1.0 # range(10)
 COUN # 0.0 # for (int i=0; i<=10; i++)
 COUN # 0.3 # Using fingers.
+TYPE # 0.0 # double, of course
+TYPE # 1.0 # I don't know
+STAT # 0.0 # A semicolon
+STAT # 0.2 # A colon
+STAT # 0.9 # Nothing, just hit enter

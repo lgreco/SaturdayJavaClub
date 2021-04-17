@@ -60,17 +60,17 @@ public class SJC {
         return requestedLine;
     } // method getLine
 
-    public static boolean questionAvailable(File questions, int questionNumber) throws IOException {
+    public static boolean questionAvailable(int questionNumber) throws IOException {
         Scanner alreadyAsked = new Scanner(new File("alreadyAsked.txt"));
-        boolean asked = false;
+        boolean available = true;
         while (alreadyAsked.hasNext()) {
             int q = alreadyAsked.nextInt();
             if (q == questionNumber) {
-                asked = true;
+                available = false;
             }
         }
         alreadyAsked.close();
-        return asked;
+        return available;
     } // method QuestionAvailable
 
     public static String getUnaskedQuestion(File questions) throws IOException {
@@ -80,11 +80,12 @@ public class SJC {
         Random rng = new Random();
         // Was this question asked before?
         int safetyCounter = 0;
-        while (!questionAvailable(questions, randomQuestionNumber) && safetyCounter < 100 * N) {
+        while (!questionAvailable(randomQuestionNumber) && safetyCounter < 100*N ) {
             randomQuestionNumber = 1 + rng.nextInt(N);
             safetyCounter++;
         }
-        if (safetyCounter <= N) {
+        System.out.printf("\nSafety counter %d\n", safetyCounter);
+        if (safetyCounter < 100*N) {
             // randomQuestionNumber has not been asked before
             // Add it to the list of questions asked before
             FileWriter fw = new FileWriter("alreadyAsked.txt", true);
@@ -105,7 +106,7 @@ public class SJC {
             temp.delete(); // then delete it.
         }
         FileWriter fw = new FileWriter("temp.txt", true); // new Filewriter for temp.txt
-        BufferedWriter bw = new BufferedWriter(fw); // new Bufferwriter for temp.txt
+        BufferedWriter bw = new BufferedWriter(fw); // new Bufferedwriter for temp.txt
         while (a.hasNext()) {
             String answer = a.nextLine();
             String label = answer.substring(0, answer.indexOf(DELIMITER) - 1);
@@ -140,6 +141,7 @@ public class SJC {
             System.out.printf("\n\n*****************************\n*    G A M E     O V E R    *\n*****************************\n");
         } else {
             // get the question's ID tag
+            System.out.printf("\n QUESTiON: [%S]\n",question);
             String tag = question.substring(0, question.indexOf(DELIMITER) - 1);
             // pull this question's answers to a separate file
             extractAnswers(tag, answers);
