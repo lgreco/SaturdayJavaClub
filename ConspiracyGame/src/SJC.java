@@ -7,14 +7,16 @@ import java.util.Scanner;
  */
 public class SJC {
 
-    public static final char DELIMITER = '#';
-    public static final String OPEN_ENDED = "*";
-    public static final String NO_MORE_QUESTIONS = "NO QUESTIONS AVAILABLE";
+    /* ***********************************************
+     * CLASS-WIDE VARIABLES AVAILABLE TO ALL METHODS *
+     *************************************************/
 
-    /**
-     * Trust score for current guest
-     */
-    public static double score = 0.0;
+    static final char DELIMITER = '#';
+    static final String NO_MORE_QUESTIONS = "NO QUESTIONS AVAILABLE";
+
+    /* Trust score for current guest */
+    static double userScore = 0.0;
+    static double machineScore = 0.0;
 
     /**
      * Method that scans a file and counts the number of lines
@@ -84,7 +86,7 @@ public class SJC {
             randomQuestionNumber = 1 + rng.nextInt(N);
             safetyCounter++;
         }
-        System.out.printf("\nSafety counter %d\n", safetyCounter);
+        //System.out.printf("\nSafety counter %d\n", safetyCounter);
         if (safetyCounter < 100*N) {
             // randomQuestionNumber has not been asked before
             // Add it to the list of questions asked before
@@ -103,6 +105,7 @@ public class SJC {
         Scanner a = new Scanner(answers);
         File temp = new File("temp.txt");
         if (temp.exists()) { // if temp file already exists from previous question
+            System.out.println("*** temp file exists ... deleting it! ***");
             temp.delete(); // then delete it.
         }
         FileWriter fw = new FileWriter("temp.txt", true); // new Filewriter for temp.txt
@@ -116,6 +119,7 @@ public class SJC {
             }
         }
         bw.close();
+        fw.close();
     } // method extractAnswers
 
     public static String getAnswer() throws IOException {
@@ -123,7 +127,7 @@ public class SJC {
         File temp = new File("temp.txt");
         // There are N possible answers in the file
         int N = countLines(temp);
-        System.out.printf("\n\t*** this question has %d answers ***\n",N);
+        //System.out.printf("\n\t*** this question has %d answers ***\n",N);
         Random rng = new Random();
         int randomAnswerNumber = 1 + rng.nextInt(N);
         Scanner t = new Scanner(temp);
@@ -132,8 +136,68 @@ public class SJC {
             randomAnswer = t.nextLine();
             lineCounter++;
         }
+        t.close();
         return randomAnswer;
     } // method getAnswer
+
+    public static void playTheGame(File questions, File answers) throws IOException {
+        // reset scores
+        userScore = 0;
+        machineScore = 0;
+        Scanner s = new Scanner(System.in);
+        // Announce arrival of guest
+        System.out.println("\nA guest is approaching ...");
+        // Decide how many questions to ask? (3-5)
+        Random rng = new Random();
+        int howManyQuestions  = 3 + rng.nextInt(3); // M + rng.nextInt(N)
+        System.out.printf("\nYou will be asking the arriving guest %d questions.\n", howManyQuestions);
+        // Loop of the number of decided questions
+        int questionsCounter = 0;
+        while (questionsCounter < howManyQuestions) {
+            //   Pull a question at random
+            String question = getUnaskedQuestion(questions);
+            int delimiterAt = question.indexOf(DELIMITER);
+            String tag = question.substring(0,delimiterAt-1);
+            question = question.substring(delimiterAt+1+1); // justify this, why 1+1
+            //   extract an answer at random
+            extractAnswers(tag,answers);
+            String answer = getAnswer();
+           double answerTrustLevel = Double.valueOf(answer.substring(7,10));
+           answer = answer.substring(13);
+            //   ask the question and show the answer
+            System.out.printf("\nYou are asking the guest: %s.\nThe guest responds: %s",question,answer);
+            //   ask user to determine if answer legit or not
+            System.out.printf("\nIf you think answer is suspicious enter 1; otherwise 0: ");
+            int evaluation = s.nextInt();
+            System.out.println();
+            //   update user score
+            userScore += evaluation;
+            machineScore += answerTrustLevel;
+            //   update machine score
+            questionsCounter++;
+        }
+        // Show user score v. machine score
+        double userEvaluation = ((double) userScore) / ((double) howManyQuestions);
+        double machineEvaluation = machineScore / ((double) howManyQuestions);
+        System.out.printf("\nInterview of the guest is completed.");
+        System.out.printf("\nYour evaluation is: %7.4f",userEvaluation);
+        System.out.printf("\nThe actual score is: %7.4f",userEvaluation);
+        if ( machineEvaluation > 0.5) {
+            if (userEvaluation < 0.5) {
+                System.out.printf("\nBased on your evaluation, a Python infiltrator would have been allowed in.");
+            } else {
+                System.out.printf("\nYou just prevented a Python infiltrator from entering the SJC! Good job.");
+            }
+        } else if (machineEvaluation <= 0.5) {
+            if (userEvaluation > 0.5) {
+                System.out.printf("\nBased on your evaluation, a legitimate guest would have been denied entry.");
+            } else {
+                System.out.printf("\nYou just admitted a legitimate guest to the club!. Good job.");
+            }
+        }
+        System.out.println();
+        s.close(); // need to close scanner to release control of File temp so that we can delete it.
+    } // method playTheGame
 
     public static void askQuestionAtRandom(File questions, File answers) throws IOException {
         String question = getUnaskedQuestion(questions);
@@ -155,6 +219,7 @@ public class SJC {
     public static void main(String[] args) throws IOException {
         File q = new File("questions.txt");
         File a = new File("answers.txt");
-        askQuestionAtRandom(q, a);
+        //askQuestionAtRandom(q, a);
+        playTheGame(q,a);
     }
 }
