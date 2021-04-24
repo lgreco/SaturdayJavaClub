@@ -27,20 +27,20 @@ public class SJC {
     /**
      * Method that scans a file and counts the number of lines
      *
-     * @param f file object to evaluate
+     * @param file file object to evaluate
      * @return number of lines in file in f
      * @throws FileNotFoundException Notes: the method does not return any specific values for file-not-found
      *                               situations or other errors. Missing files are handled by the thrown
      *                               exception.
      */
-    public static int countLines(File f) throws FileNotFoundException {
-        Scanner fInput = new Scanner(f);
+    public static int countLines(File file) throws FileNotFoundException {
+        Scanner f = new Scanner(file);
         int lineCounter = 0;
-        while (fInput.hasNext()) { // keep reading until the next of file
-            fInput.nextLine(); // not interested in "saving" the contents we read
+        while (f.hasNext()) { // keep reading until the next of file
+            f.nextLine(); // not interested in "saving" the contents we read
             lineCounter++;
         }
-        fInput.close(); // It costs nothing to be nice to the system!
+        f.close(); // It costs nothing to be nice to the system!
         return lineCounter;
     } // method countLines
 
@@ -48,7 +48,7 @@ public class SJC {
      * Method to obtain the n-th lineIndex of a file. The method ensures that the requested
      * lineIndex does not exceed the length of the file (measured in lines).
      *
-     * @param questions         File object to use for obtaining a lineIndex from
+     * @param questions File object to use for obtaining the line at lineIndex
      * @param lineIndex The position of the line that we want to obtain
      * @return The line at the requested position
      * @throws FileNotFoundException
@@ -75,23 +75,38 @@ public class SJC {
         return requestedLine;
     } // method getLine
 
-    public static boolean questionAsked(int questionNumber) throws IOException {
-        return questionAlreadyAsked[questionNumber];
-    } // method QuestionAvailable
-
+    /**
+     * Method to find a question that has been not asked before.
+     * @param questions File with questions
+     * @return A string with an unanswered question
+     * @throws IOException
+     */
     public static String getUnaskedQuestion(File questions) throws IOException {
-        int randomQuestionNumber = 0;
-        String question = NO_MORE_QUESTIONS;
+        String question = NO_MORE_QUESTIONS; // initialize to message that we are out of questions
         Random rng = new Random();
+        /*
+        Create a safety net about the number of attempts at finding an unasked question. As
+        more and more questions are asked, it may take longer to find one that has been not
+        asked. (Extreme scenario, 99 of 100 questions asked, no rng has to find the last
+        available question. If this takes too long, we should give up and essentially assume
+        that we are out of questions. safetyNet is the number of attempts allowed at finding
+        the next question. This protection is moot once we move to data structures implementation.
+         */
         int safetyNet = 100*numberOfQuestions;
+        int randomQuestionNumber = rng.nextInt(numberOfQuestions);
         // Was this question asked before?
         int safetyCounter = 0;
-        while (questionAsked(randomQuestionNumber) && safetyCounter < safetyNet ) {
-            randomQuestionNumber = 1 + rng.nextInt(numberOfQuestions);
+        while (questionAlreadyAsked[randomQuestionNumber] && safetyCounter < safetyNet ) {
+            randomQuestionNumber = rng.nextInt(numberOfQuestions);
             safetyCounter++;
         }
-        //System.out.printf("\nSafety counter %d\n", safetyCounter);
-        if (safetyCounter < safetyNet) {
+        /*
+        At this point either we have the index number for a fresh (not previously asked)
+        question, or we have exceeded the safety net, i.e., we have tried enough times and
+        have not found an unasked question. It is safe to assume that there aren't any
+        such questions available.
+         */
+        if (safetyCounter < safetyNet) { // safety counter has not exceeded the safety net.
             // randomQuestionNumber has not been asked before
             // Add it to the list of questions asked before
             questionAlreadyAsked[randomQuestionNumber] = true;

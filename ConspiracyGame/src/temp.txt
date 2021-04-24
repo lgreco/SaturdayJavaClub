@@ -1,2 +1,3 @@
-TYPE # 0.0 # double, of course
-TYPE # 1.0 # I don't know
+STAT # 0.0 # A semicolon
+STAT # 0.2 # A colon
+STAT # 0.9 # Nothing, just hit enter
