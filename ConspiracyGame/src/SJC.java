@@ -18,6 +18,12 @@ public class SJC {
     static double userScore = 0.0;
     static double machineScore = 0.0;
 
+    /** Number of questions on file */
+    static int numberOfQuestions;
+
+    /** Asked questions */
+    static boolean[] questionAlreadyAsked;
+
     /**
      * Method that scans a file and counts the number of lines
      *
@@ -42,59 +48,53 @@ public class SJC {
      * Method to obtain the n-th lineIndex of a file. The method ensures that the requested
      * lineIndex does not exceed the length of the file (measured in lines).
      *
-     * @param f         File object to use for obtaining a lineIndex from
+     * @param questions         File object to use for obtaining a lineIndex from
      * @param lineIndex The position of the line that we want to obtain
      * @return The line at the requested position
      * @throws FileNotFoundException
      */
-    public static String getLine(File f, int lineIndex) throws FileNotFoundException {
-        Scanner fInput = new Scanner(f); // new scanner object places read pointer at top of file
-        int lineCounter = 0; // WE ARE OFF BY ONE ... THE ETERNAL 0- VS 1-BASED COUNTING
-        String requestedLine = "DATA NOT FOUND"; // default answer if something goes wrong
-        if (lineIndex <= countLines(f)) { // make sure that we are not exceeding file length (in lines)
-            while (fInput.hasNext() && lineCounter != lineIndex) { // keep reading until line found
-                // in ... theory ... hasNext() above is redundant ... q for students: why?
-                requestedLine = fInput.nextLine();
+    public static String getLine(File questions, int lineIndex) throws FileNotFoundException {
+        Scanner q = new Scanner(questions); // new scanner object places read pointer at top of file
+        String requestedLine = q.nextLine(); // start from the first line of the file
+        if (lineIndex <= numberOfQuestions) { // make sure that we are not exceeding file length (in lines)
+            /*
+            Loop to keep reading the questions file, until the requested line is found. If the
+            requested line is the file's first line (lineCounter=0), the loop will not run.
+            That's ok, because requestedLine above has been initialized to the first line of the file.
+            The hasNext() below is redundant; the loop is executed within the scope of the if
+            statement that checks to make sure the requested lineIndex is less than the number
+            of questions (ie, lines) in the file.
+             */
+            int lineCounter = 0;
+            while (q.hasNext() && lineCounter != lineIndex) {
+                requestedLine = q.nextLine();
                 lineCounter++;
             }
         }
-        fInput.close();
+        q.close();
         return requestedLine;
     } // method getLine
 
-    public static boolean questionAvailable(int questionNumber) throws IOException {
-        Scanner alreadyAsked = new Scanner(new File("alreadyAsked.txt"));
-        boolean available = true;
-        while (alreadyAsked.hasNext()) {
-            int q = alreadyAsked.nextInt();
-            if (q == questionNumber) {
-                available = false;
-            }
-        }
-        alreadyAsked.close();
-        return available;
+    public static boolean questionAsked(int questionNumber) throws IOException {
+        return questionAlreadyAsked[questionNumber];
     } // method QuestionAvailable
 
     public static String getUnaskedQuestion(File questions) throws IOException {
-        int N = countLines(questions); // how many questions are there?
         int randomQuestionNumber = 0;
         String question = NO_MORE_QUESTIONS;
         Random rng = new Random();
+        int safetyNet = 100*numberOfQuestions;
         // Was this question asked before?
         int safetyCounter = 0;
-        while (!questionAvailable(randomQuestionNumber) && safetyCounter < 100*N ) {
-            randomQuestionNumber = 1 + rng.nextInt(N);
+        while (questionAsked(randomQuestionNumber) && safetyCounter < safetyNet ) {
+            randomQuestionNumber = 1 + rng.nextInt(numberOfQuestions);
             safetyCounter++;
         }
         //System.out.printf("\nSafety counter %d\n", safetyCounter);
-        if (safetyCounter < 100*N) {
+        if (safetyCounter < safetyNet) {
             // randomQuestionNumber has not been asked before
             // Add it to the list of questions asked before
-            FileWriter fw = new FileWriter("alreadyAsked.txt", true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(String.format("%d", randomQuestionNumber));
-            bw.newLine();
-            bw.close();
+            questionAlreadyAsked[randomQuestionNumber] = true;
             // pull question
             question = getLine(questions, randomQuestionNumber);
         }
@@ -141,6 +141,8 @@ public class SJC {
     } // method getAnswer
 
     public static void playTheGame(File questions, File answers) throws IOException {
+        numberOfQuestions = countLines(questions); // how many questions are there?
+        questionAlreadyAsked = new boolean[numberOfQuestions];
         // reset scores
         userScore = 0;
         machineScore = 0;
@@ -177,11 +179,11 @@ public class SJC {
             questionsCounter++;
         }
         // Show user score v. machine score
-        double userEvaluation = ((double) userScore) / ((double) howManyQuestions);
+        double userEvaluation = userScore / ((double) howManyQuestions);
         double machineEvaluation = machineScore / ((double) howManyQuestions);
         System.out.printf("\nInterview of the guest is completed.");
         System.out.printf("\nYour evaluation is: %7.4f",userEvaluation);
-        System.out.printf("\nThe actual score is: %7.4f",userEvaluation);
+        System.out.printf("\nThe actual score is: %7.4f",machineEvaluation);
         if ( machineEvaluation > 0.5) {
             if (userEvaluation < 0.5) {
                 System.out.printf("\nBased on your evaluation, a Python infiltrator would have been allowed in.");

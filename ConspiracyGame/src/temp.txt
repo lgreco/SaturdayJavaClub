@@ -1,3 +1,2 @@
-COUN # 1.0 # range(10)
-COUN # 0.0 # for (int i=0; i<=10; i++)
-COUN # 0.3 # Using fingers.
+TYPE # 0.0 # double, of course
+TYPE # 1.0 # I don't know
