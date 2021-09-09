@@ -1,15 +1,14 @@
 # Saturday Java Club
 
-## Information for Spring 2021
+## Information for Fall 2021
 
-Next meeting: Saturday 4/17/21, 9 a.m.
+Zoom ID: [814 7264 5309] ( https://luc.zoom.us/j/81472645309)
 
-**Current project:** building a text-based adventure game to defend
-the club from inflitration by the sinister overlords of the Friday
-Python Circle. We use Twine for story boarding, OneNote for ideation,
-and of course IntelliJ for coding.
+*First* meeting: Saturday 9/11/21, 9 a.m.
 
-We meet every **Saturday, at 9 a.m.,** beginning February 6.
+
+
+We meet every **Saturday, at 9 a.m.
 Everyone is welcome to the Club meetings.
 The setting is casual and informal.
 The club is a great place for students that have just
@@ -21,17 +20,9 @@ of a text-based, interactive adventure game!
 
 We avoid discussing homework assignments
 but sometimes we use them as an opportunity
-to dig a bit deeper on various topics. The last meeting will be on 4/24.
-
-The Zoom link is: https://luc.zoom.us/j/89140806576.
-The meetings are not recorded.
-
+to dig a bit deeper on various topics.  
 Bring your curiosity about programming,
 a fresh cup of coffee or your favorite beverage,
 and join fellow students and members of the department's
 programming instructional team to learn from each other.
-
-[Calendar file for Google Calendar, Outlook, etc.](https://raw.githubusercontent.com/lgreco/SaturdayJavaClub/master/MS%20Office%20Files/SJC_SP21.ics)
-
-
 
