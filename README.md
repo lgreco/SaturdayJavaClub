@@ -1,6 +1,6 @@
-# Saturday Java Club
+Saturday Java Club
 
-## Information for Fall 2021
+Information for Fall 2021
 
 Zoom ID: [814 7264 5309](https://luc.zoom.us/j/81472645309)
 
