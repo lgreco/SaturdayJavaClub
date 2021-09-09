@@ -8,7 +8,7 @@ Zoom ID: [814 7264 5309](https://luc.zoom.us/j/81472645309)
 
 
 
-We meet every **Saturday, at 9 a.m.
+We meet every **Saturday, at 9 a.m.**
 Everyone is welcome to the Club meetings.
 The setting is casual and informal.
 The club is a great place for students that have just
