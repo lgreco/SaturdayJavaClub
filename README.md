@@ -2,7 +2,7 @@
 
 ## Information for Fall 2021
 
-Zoom ID: [814 7264 5309] ( https://luc.zoom.us/j/81472645309)
+Zoom ID: [814 7264 5309](https://luc.zoom.us/j/81472645309)
 
 *First* meeting: Saturday 9/11/21, 9 a.m.
 
