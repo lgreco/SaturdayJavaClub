@@ -5,13 +5,13 @@ Information for Fall 2021
 
 
 
-Zoom ID: [814 7264 5309](https://luc.zoom.us/j/81472645309)
+Zoom ID: [870 3517 8617]( https://luc.zoom.us/j/87035178617)
 
-*First* meeting: Saturday 9/11/21, 9 a.m.
+*Second* meeting: Saturday 9/25/11, 9 a.m.
 
 
 
-We meet every **Saturday, at 9 a.m.**
+We meet every **other** Saturday, at 9 a.m.
 Everyone is welcome to the Club meetings.
 The setting is casual and informal.
 The club is a great place for students that have just
