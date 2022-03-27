@@ -63,13 +63,13 @@ public class TransformTheString {
         // Initialize operations counter
         int operationsCount = 0;
         // Grab the first letter of F -- safe since we checked against 0-length already
-        char f0 = F.charAt(0);
+        char first = F.charAt(0);
         // For every letter in S, find which letter in F is at the shortest distance
         for (int i = 0; i < S.length(); i++) {
             s = S.charAt(i);
             // Assume that the shortest distance is between s and the first letter in F
-            shortestDistance = minDistance(s, f0);
-            // Check the rest of the letters in F to see if there is one closer to s
+            shortestDistance = minDistance(s, first);
+            // Check the rest of the letters in F (loop starts at 1) to see if there is one closer to s
             for (int j = 1; j < F.length(); j++) {
                 f = F.charAt(j);
                 currentDistance = minDistance(s, f);
@@ -88,6 +88,7 @@ public class TransformTheString {
      * Tests the code using Google-provided test cases and expected results.
      *
      * The test data are placed into two folders:
+     *
      *          test_set_1
      *                      ts1_input.txt
      *                      ts1_output.txt
@@ -125,7 +126,8 @@ public class TransformTheString {
         // Count for successful tests
         int successfulTests;
         // Timing variables
-        long start, finish; double seconds;
+        long start, finish;
+        double timeInSeconds;
         // Loop over the number of test cases
         for (int test = 1; test <= TESTS; test++) {
             // Paths to input and output data files
@@ -154,17 +156,17 @@ public class TransformTheString {
                 if (report.equals(R))
                     successfulTests++;  // yeah!
             }
-            // Stopwatch update
-            finish = System.nanoTime() - start;
-            // Convert nanoseconds to seconds
-            seconds = ((double) finish)/NANOS_PER_SEC;
+            // Stopwatch update and convert nanoseconds to seconds
+            finish = System.nanoTime();
+            // To convert. we subtract the long values first, then cast them as double
+            timeInSeconds = ((double)(finish -  start))/NANOS_PER_SEC;
             // Report and close the scanners
             System.out.printf("\nTest set %d\n\t%d cases\n\tYour score: %d/%d\n\t%12.10f sec\n",
-                    test, numberOfCases, successfulTests, numberOfCases, seconds);
+                    test, numberOfCases, successfulTests, numberOfCases, timeInSeconds);
             testIn.close();
             testOut.close();
-        }  // method test
-    }
+        }
+    }  // method test
 
 
     /** Driver code */
