@@ -18,7 +18,7 @@ import java.util.Scanner;
  *   we should go for "oou" in this example. Thus we need to look for equidistant choices and select the one that does
  *   not appear in the transformed string yet. Otherwise, we can select at random between the two equidistant letters.
  *
- * - Protect S, F, by ensuring they are lowercase only. *
+ * - Protect S, F, by ensuring they are lowercase only.
  *
  */
 public class TransformTheString {
