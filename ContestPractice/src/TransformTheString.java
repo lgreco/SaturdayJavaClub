@@ -159,7 +159,8 @@ public class TransformTheString {
             // Convert nanoseconds to seconds
             seconds = ((double) finish)/NANOS_PER_SEC;
             // Report and close the scanners
-            System.out.printf("\nTest set %d\n\t%d cases\n\tYour score: %d/%d\n\t%12.10f sec\n", test, numberOfCases, successfulTests, numberOfCases, seconds);
+            System.out.printf("\nTest set %d\n\t%d cases\n\tYour score: %d/%d\n\t%12.10f sec\n",
+                    test, numberOfCases, successfulTests, numberOfCases, seconds);
             testIn.close();
             testOut.close();
         }  // method test
