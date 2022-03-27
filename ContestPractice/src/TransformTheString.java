@@ -120,7 +120,7 @@ public class TransformTheString {
         // Strings for test files
         String testInput, testOutput;
         // Strings to read from files
-        String S, F, googleResults;
+        String S, F, googleResult;
         // Scanners for the test input file and the test output file
         Scanner testIn, testOut;
         // Count for successful tests
@@ -149,11 +149,11 @@ public class TransformTheString {
             for (int i = 1; i <= numberOfCases; i++) {
                 S = testIn.next();  // String to rearrange
                 F = testIn.next();  // String with target letters
-                googleResults = testOut.nextLine();  // Expected results string
+                googleResult = testOut.nextLine();  // Expected results string
                 // Build our result string by passing S, F to our minNumberOfOperations method
-                String ourResults = String.format("Case #%d: %d", i, minNumberOfOperations(S, F));
+                String ourResult = String.format("Case #%d: %d", i, minNumberOfOperations(S, F));
                 // Compare the two strings
-                if (ourResults.equals(googleResults))
+                if (ourResult.equals(googleResult))
                     successfulTests++;  // yeah!
             }
             // Stopwatch update and convert nanoseconds to seconds
