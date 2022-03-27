@@ -120,7 +120,7 @@ public class TransformTheString {
         // Strings for test files
         String testInput, testOutput;
         // Strings to read from files
-        String S, F, R;
+        String S, F, googleResults;
         // Scanners for the test input file and the test output file
         Scanner testIn, testOut;
         // Count for successful tests
@@ -148,19 +148,19 @@ public class TransformTheString {
             // Set up loop to read test csases
             for (int i = 1; i <= numberOfCases; i++) {
                 S = testIn.next();  // String to rearrange
-                F = testIn.next();  // String with targer letters
-                R = testOut.nextLine();  // Expected results string
+                F = testIn.next();  // String with target letters
+                googleResults = testOut.nextLine();  // Expected results string
                 // Build our result string by passing S, F to our minNumberOfOperations method
-                String report = String.format("Case #%d: %d", i, minNumberOfOperations(S, F));
+                String ourResults = String.format("Case #%d: %d", i, minNumberOfOperations(S, F));
                 // Compare the two strings
-                if (report.equals(R))
+                if (ourResults.equals(googleResults))
                     successfulTests++;  // yeah!
             }
             // Stopwatch update and convert nanoseconds to seconds
             finish = System.nanoTime();
             // To convert. we subtract the long values first, then cast them as double
             timeInSeconds = ((double)(finish -  start))/NANOS_PER_SEC;
-            // Report and close the scanners
+            // Report findings and close the scanners
             System.out.printf("\nTest set %d\n\t%d cases\n\tYour score: %d/%d\n\t%12.10f sec\n",
                     test, numberOfCases, successfulTests, numberOfCases, timeInSeconds);
             testIn.close();
