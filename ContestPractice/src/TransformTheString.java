@@ -7,6 +7,19 @@ import java.util.Scanner;
  *
  *   Round H 2021 - (Google's) Kick Start 2021 - Transform the String
  *
+ * @author coding club @luc, 26 MAR 2022
+ *
+ * Future class improvements:
+ *
+ * - Ensure that every letter in F is present at least once in S after transformation. This creates an interesting
+ *   case for special consideration, e.g. S="pqr", F="ou". The min. operations is 6, transforming S to "ooo" or "oou".
+ *   The letter r is equidistant from o and u, so either choice fulfills the problem as stated by Google. If we add
+ *   the restriction (proposed by Yacobellis) that every letter in F must appear at least once in transformed S, then
+ *   we should go for "oou" in this example. Thus we need to look for equidistant choices and select the one that does
+ *   not appear in the transformed string yet. Otherwise, we can select at random between the two equidistant letters.
+ *
+ * - Protect S, F, by ensuring they are lowercase only. *
+ *
  */
 public class TransformTheString {
 
@@ -19,7 +32,8 @@ public class TransformTheString {
 
     /**
      * Computes minimum distance between two letters. For example, the shortest distance between a and c is 2 and the
-     * shortest distance between a and y is also 2.
+     * shortest distance between a and y is also 2. This method is based on the fact that the minimum distance between
+     * any two letters is always <= 13 (half the size of the alphabet).
      *
      * @param from char first letter
      * @param to char second letter
