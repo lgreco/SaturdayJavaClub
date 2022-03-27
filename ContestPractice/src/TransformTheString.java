@@ -15,8 +15,9 @@ import java.util.Scanner;
  *   case for special consideration, e.g. S="pqr", F="ou". The min. operations is 6, transforming S to "ooo" or "oou".
  *   The letter r is equidistant from o and u, so either choice fulfills the problem as stated by Google. If we add
  *   the restriction (proposed by Yacobellis) that every letter in F must appear at least once in transformed S, then
- *   we should go for "oou" in this example. Thus we need to look for equidistant choices and select the one that does
- *   not appear in the transformed string yet. Otherwise, we can select at random between the two equidistant letters.
+ *   we should go for "oou" in this example. Thus, when we look at equidistant choices, we must select the one that
+ *   has not appeared in the transformed string yet. Otherwise, we can select at random between the two equidistant
+ *   letters.
  *
  * - Protect S, F, by ensuring they are lowercase only.
  *
