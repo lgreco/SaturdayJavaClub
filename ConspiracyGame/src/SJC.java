@@ -11,18 +11,34 @@ public class SJC {
      * CLASS-WIDE VARIABLES AVAILABLE TO ALL METHODS *
      *************************************************/
 
+    /**
+     * Delimiter symbol for files
+     */
     static final char DELIMITER = '#';
+    /**
+     * Default content when we're out of questions
+     */
     static final String NO_MORE_QUESTIONS = "NO QUESTIONS AVAILABLE";
 
     /* Trust score for current guest */
-    static double userScore = 0.0;
-    static double machineScore = 0.0;
+    static double userScore = 0.0; // player-assessed risk
+    static double machineScore = 0.0; // actual risk
 
-    /** Number of questions on file */
+    /**
+     * Number of questions on file
+     */
     static int numberOfQuestions;
 
-    /** Asked questions */
+    /**
+     * Asked questions
+     */
     static boolean[] questionAlreadyAsked;
+
+
+    /* ***************
+     *     METHOD    *
+     * ***************/
+
 
     /**
      * Method that scans a file and counts the number of lines
@@ -77,6 +93,7 @@ public class SJC {
 
     /**
      * Method to find a question that has been not asked before.
+     *
      * @param questions File with questions
      * @return A string with an unanswered question
      * @throws IOException
@@ -85,18 +102,18 @@ public class SJC {
         String question = NO_MORE_QUESTIONS; // initialize to message that we are out of questions
         Random rng = new Random();
         /*
-        Create a safety net about the number of attempts at finding an unasked question. As
+        Create a safety net about the number of attempts to find an unasked question. As
         more and more questions are asked, it may take longer to find one that has been not
         asked. (Extreme scenario, 99 of 100 questions asked, no rng has to find the last
         available question. If this takes too long, we should give up and essentially assume
         that we are out of questions. safetyNet is the number of attempts allowed at finding
         the next question. This protection is moot once we move to data structures implementation.
          */
-        int safetyNet = 100*numberOfQuestions;
+        int safetyNet = 100 * numberOfQuestions;
         int randomQuestionNumber = rng.nextInt(numberOfQuestions);
         // Was this question asked before?
         int safetyCounter = 0;
-        while (questionAlreadyAsked[randomQuestionNumber] && safetyCounter < safetyNet ) {
+        while (questionAlreadyAsked[randomQuestionNumber] && safetyCounter < safetyNet) {
             randomQuestionNumber = rng.nextInt(numberOfQuestions);
             safetyCounter++;
         }
@@ -116,20 +133,26 @@ public class SJC {
         return question;
     } // method getUnaskedQuestion
 
+    /**
+     * Method to pull the answers for a given question to a separate file.
+     *
+     * @param tag     identifies which answers to pull out
+     * @param answers file with answers to all questions
+     * @throws IOException
+     */
     public static void extractAnswers(String tag, File answers) throws IOException {
-        Scanner a = new Scanner(answers);
-        File temp = new File("temp.txt");
+        File temp = new File("temp.txt"); // temp file to hold answers to question labeled by tag
         if (temp.exists()) { // if temp file already exists from previous question
-            System.out.println("*** temp file exists ... deleting it! ***");
             temp.delete(); // then delete it.
         }
-        FileWriter fw = new FileWriter("temp.txt", true); // new Filewriter for temp.txt
+        FileWriter fw = new FileWriter("temp.txt"); // new Filewriter for temp.txt
         BufferedWriter bw = new BufferedWriter(fw); // new Bufferedwriter for temp.txt
+        Scanner a = new Scanner(answers); // Scanner for file with answers to all questions
         while (a.hasNext()) {
-            String answer = a.nextLine();
-            String label = answer.substring(0, answer.indexOf(DELIMITER) - 1);
-            if (label.equals(tag)) {
-                bw.write(answer);
+            String answer = a.nextLine(); // pull an answer
+            String label = answer.substring(0, answer.indexOf(DELIMITER) - 1); // extract its label
+            if (label.equals(tag)) { // if label matches question tag
+                bw.write(answer); // write answer to temp file
                 bw.newLine();
             }
         }
@@ -137,17 +160,24 @@ public class SJC {
         fw.close();
     } // method extractAnswers
 
+    /**
+     * Selects an answer, at random, from the temporary file that holds
+     * all answers to a particular question. The answers are collected in
+     * the file thanks to the extractAnswers() method.
+     *
+     * @return An answer from the tempo file
+     * @throws IOException
+     */
     public static String getAnswer() throws IOException {
-        String randomAnswer = "NO ANSWER AVAILABLE";
         File temp = new File("temp.txt");
         // There are N possible answers in the file
         int N = countLines(temp);
-        //System.out.printf("\n\t*** this question has %d answers ***\n",N);
         Random rng = new Random();
-        int randomAnswerNumber = 1 + rng.nextInt(N);
+        int randomAnswerNumber = rng.nextInt(N);
         Scanner t = new Scanner(temp);
+        String randomAnswer = t.nextLine(); // first answer in the file
         int lineCounter = 0;
-        while (t.hasNext() && lineCounter!=randomAnswerNumber) {
+        while (t.hasNext() && lineCounter != randomAnswerNumber) {
             randomAnswer = t.nextLine();
             lineCounter++;
         }
@@ -155,41 +185,59 @@ public class SJC {
         return randomAnswer;
     } // method getAnswer
 
+    /**
+     * The method that controls the game.
+     *
+     * @param questions File with questions
+     * @param answers   File with answers
+     * @throws IOException
+     */
     public static void playTheGame(File questions, File answers) throws IOException {
         numberOfQuestions = countLines(questions); // how many questions are there?
-        questionAlreadyAsked = new boolean[numberOfQuestions];
+        questionAlreadyAsked = new boolean[numberOfQuestions]; // array to track asked questions
         // reset scores
-        userScore = 0;
-        machineScore = 0;
-        Scanner s = new Scanner(System.in);
+        userScore = 0.0;
+        machineScore = 0.0;
         // Announce arrival of guest
         System.out.println("\nA guest is approaching ...");
         // Decide how many questions to ask? (3-5)
         Random rng = new Random();
-        int howManyQuestions  = 3 + rng.nextInt(3); // M + rng.nextInt(N)
+        int howManyQuestions = 3 + rng.nextInt(3); // M + rng.nextInt(N)
         System.out.printf("\nYou will be asking the arriving guest %d questions.\n", howManyQuestions);
+        Scanner s = new Scanner(System.in); // keyboard input
         // Loop of the number of decided questions
         int questionsCounter = 0;
         while (questionsCounter < howManyQuestions) {
-            //   Pull a question at random
+            // Pull a question at random
             String question = getUnaskedQuestion(questions);
+            // separate question from its tag
             int delimiterAt = question.indexOf(DELIMITER);
-            String tag = question.substring(0,delimiterAt-1);
-            question = question.substring(delimiterAt+1+1); // justify this, why 1+1
-            //   extract an answer at random
-            extractAnswers(tag,answers);
+            String tag = question.substring(0, delimiterAt - 1);
+            question = question.substring(delimiterAt + 2); // +2 because we leave a space after the delimiter
+            // extract an answer at random
+            extractAnswers(tag, answers);
             String answer = getAnswer();
-           double answerTrustLevel = Double.valueOf(answer.substring(7,10));
-           answer = answer.substring(13);
-            //   ask the question and show the answer
-            System.out.printf("\nYou are asking the guest: %s.\nThe guest responds: %s",question,answer);
-            //   ask user to determine if answer legit or not
+            /*
+            Extract prob that guest is infiltrator based on this answer. Answers are
+            formatted as
+            AAAA # x.y # Aaaaa....
+            The probability is shown between the two delimiters, so first we grab thei
+            delimiters' positions. Next we extract the prob as a substring to the right
+            of the first delimiter and to the left of the second.
+             */
+            int firstDelimiter = answer.indexOf(DELIMITER); // we need +2 below, to account for space after delimiter
+            int secondDelimiter = answer.indexOf(DELIMITER,firstDelimiter+1); // we need -1 below to account for space before delimiter
+            double probabilityInfiltrator = Double.valueOf(answer.substring(firstDelimiter+2, secondDelimiter-1));
+            answer = answer.substring(secondDelimiter+2); // +2 to accommodate for space after delimiter
+            // ask the question and show the answer
+            System.out.printf("\nYou are asking the guest: %s.\nThe guest responds: [%s]", question, answer);
+            // ask user to determine if answer legit or not
             System.out.printf("\nIf you think answer is suspicious enter 1; otherwise 0: ");
             int evaluation = s.nextInt();
             System.out.println();
             //   update user score
             userScore += evaluation;
-            machineScore += answerTrustLevel;
+            machineScore += probabilityInfiltrator;
             //   update machine score
             questionsCounter++;
         }
@@ -197,9 +245,9 @@ public class SJC {
         double userEvaluation = userScore / ((double) howManyQuestions);
         double machineEvaluation = machineScore / ((double) howManyQuestions);
         System.out.printf("\nInterview of the guest is completed.");
-        System.out.printf("\nYour evaluation is: %7.4f",userEvaluation);
-        System.out.printf("\nThe actual score is: %7.4f",machineEvaluation);
-        if ( machineEvaluation > 0.5) {
+        System.out.printf("\nYour evaluation is: %7.4f", userEvaluation);
+        System.out.printf("\nThe actual score is: %7.4f", machineEvaluation);
+        if (machineEvaluation > 0.5) {
             if (userEvaluation < 0.5) {
                 System.out.printf("\nBased on your evaluation, a Python infiltrator would have been allowed in.");
             } else {
@@ -216,27 +264,11 @@ public class SJC {
         s.close(); // need to close scanner to release control of File temp so that we can delete it.
     } // method playTheGame
 
-    public static void askQuestionAtRandom(File questions, File answers) throws IOException {
-        String question = getUnaskedQuestion(questions);
-        if ( question.equals(NO_MORE_QUESTIONS)) {
-            System.out.printf("\n\n*****************************\n*    G A M E     O V E R    *\n*****************************\n");
-        } else {
-            // get the question's ID tag
-            System.out.printf("\n QUESTiON: [%S]\n",question);
-            String tag = question.substring(0, question.indexOf(DELIMITER) - 1);
-            // pull this question's answers to a separate file
-            extractAnswers(tag, answers);
-            // present question and choices to user:
-            System.out.printf("\n\nYou are asking the guest the following question:\n%s", question);
-            String randomAnswer = getAnswer();
-            System.out.printf("\n\nThe guest answers: %s", randomAnswer);
-        }
-    } // method askQuestionAtRandom
 
     public static void main(String[] args) throws IOException {
         File q = new File("questions.txt");
         File a = new File("answers.txt");
         //askQuestionAtRandom(q, a);
-        playTheGame(q,a);
-    }
+        playTheGame(q, a);
+    } // method main
 }

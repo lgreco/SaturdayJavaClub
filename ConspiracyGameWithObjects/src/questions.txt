@@ -1,0 +1,9 @@
+ASSY # What is the capital of Assyria?
+SWAL # What is the air-speed velocity of an unladen swallow?
+FOUR # What is your favorite four-letter word?
+COUN # How do you count to 10?
+GUID # Do you know how to pronounce Guido?
+DIFF # Is there a difference between "A" and 'A'?
+INTD # What is 5//2?
+TYPE # What type is 3.14
+STAT # What goes at the end of a statement?

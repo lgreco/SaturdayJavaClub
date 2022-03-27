@@ -1,0 +1,27 @@
+ASSY # 0.7 # Ashur!
+ASSY # 0.2 # Damascus
+ASSY # 0.2 # I don't know
+ASSY # 0.1 # Kent
+SWAL # 0.9 # What do you mean, an African or European Swallow?!
+SWAL # 0.5 # I don't know
+SWAL # 0.0 # double velocity = 4.5 // fps
+FOUR # 0.0 # this!
+FOUR # 1.0 # self
+SWAL # 0.6 # DOUBLE VEL = 10 ** M/S
+FOUR # 0.5 # Work
+GUID # 0.9 # With a soft d.
+GUID # 0.6 # I don't speak Dutch.
+GUID # 0.5 # with a hard d.
+GUID # 0.1 # I don't know.
+INTD # 0.9 # Duh... 2.
+INTD # 0.0 # I don't recognize //
+DIFF # 1.0 # There is no difference.
+DIFF # 0.0 # 'A' is a char primitive, "A" is a String.
+COUN # 1.0 # range(10)
+COUN # 0.0 # for (int i=0; i<=10; i++)
+COUN # 0.3 # Using fingers.
+TYPE # 0.0 # double, of course
+TYPE # 1.0 # I don't know
+STAT # 0.0 # A semicolon
+STAT # 0.2 # A colon
+STAT # 0.9 # Nothing, just hit enter
