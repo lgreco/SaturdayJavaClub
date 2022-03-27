@@ -148,7 +148,7 @@ public class TransformTheString {
                 S = testIn.next();  // String to rearrange
                 F = testIn.next();  // String with targer letters
                 R = testOut.nextLine();  // Expected results string
-                // Build our result string
+                // Build our result string by passing S, F to our minNumberOfOperations method
                 String report = String.format("Case #%d: %d", i, minNumberOfOperations(S, F));
                 // Compare the two strings
                 if (report.equals(R))
